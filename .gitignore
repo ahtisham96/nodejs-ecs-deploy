@@ -1,9 +1,6 @@
 # Terraform
-.terraform/
+**/.terraform/*
 *.tfstate
 *.tfstate.*
-
-# Node.js
-node_modules/
-.env
+.terraform.lock.hcl
 
