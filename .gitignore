@@ -1,1 +1,9 @@
-terraform/.terraform/*
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Node.js
+node_modules/
+.env
+
