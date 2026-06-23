@@ -8,3 +8,10 @@ stage = "dev"
 # VPC module variables
 # --------------------------------------------------
 cidr_block = "10.0.0.0/16"
+
+
+# --------------------------------------------------
+# ECS-Fargate module variables
+# --------------------------------------------------
+ecs_cluster_name = "ecs-cluster-fargate"
+

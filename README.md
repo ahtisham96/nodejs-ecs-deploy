@@ -14,7 +14,7 @@ Setup the Reqired Infrastructure the deploy the web app using terrraform
 
 terraform init -backend-config=backends/dev.tfbackend
 
-terraform plan -var-file=vars/live.tfvars
+terraform plan -var-file=vars/dev.tfvars
 
 
         

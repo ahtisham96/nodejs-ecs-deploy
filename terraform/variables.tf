@@ -18,3 +18,9 @@ variable "cidr_block" {
     description = "cidr_blcok"
     type = string
 }
+
+
+# --------------------------------------------------
+# ECS-Fargate module variables
+# --------------------------------------------------
+
