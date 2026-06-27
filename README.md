@@ -7,8 +7,10 @@ Verify the Installed packages:
     node --version
     npm --version
 
-Run this command to start the web app
-    node main.js
+Run this command to start the web app locally
+    cd nodejs
+    npm install
+    npm start
 
 Setup the Reqired Infrastructure the deploy the web app using terrraform
 

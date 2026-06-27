@@ -13,8 +13,8 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "private_subnet_id" {
-  description = "private subnet id"
+variable "subnet_id" {
+  description = "subnet id for ECS tasks"
   type        = string
 }
 

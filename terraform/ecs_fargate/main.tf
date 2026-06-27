@@ -1,6 +1,13 @@
 # creating simple ecs cluster with default settings
 resource "aws_ecs_cluster" "this" {
   name = "${var.project_name}-${var.env}-ecs-fargate"
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
+}
+resource "aws_cloudwatch_log_group" "this" {
+  name = "${var.project_name}-${var.env}-ecs-fargate-cw"
 }
 
 
@@ -21,7 +28,23 @@ resource "aws_ecs_task_definition" "this" {
     "image": "${var.project_name}-${var.env}-frontend-image",
     "cpu": 256,
     "memory": 512,
-    "essential": true
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 3000,
+        "hostPort": 3000,
+        "protocol": "tcp"
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${aws_cloudwatch_log_group.this.name}",
+        "awslogs-region": "us-east-1",
+        "awslogs-stream-prefix": "ecs",
+        "awslogs-create-group": "true"
+      }
+    }
   }
 ]
 TASK_DEFINITION
@@ -35,8 +58,8 @@ resource "aws_security_group" "lb" {
 
   ingress {
     protocol    = "tcp"
-    from_port   = 8080
-    to_port     = 8080
+    from_port   = 3000
+    to_port     = 3000
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -60,8 +83,8 @@ resource "aws_security_group" "ecs_tasks" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = 8080
-    to_port         = 8080
+    from_port       = 3000
+    to_port         = 3000
     security_groups = [aws_security_group.lb.id]
   }
 
@@ -91,9 +114,9 @@ resource "aws_ecs_service" "this" {
   #   container_port   = 8080
   # }
   network_configuration {
-    subnets          = [var.private_subnet_id]
+    subnets          = [var.subnet_id]
     security_groups  = [aws_security_group.ecs_tasks.id]
-    assign_public_ip = false
+    assign_public_ip = true
   }
 
 }
