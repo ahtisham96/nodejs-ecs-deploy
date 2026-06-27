@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: dev
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -27,7 +28,7 @@ jobs:
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          registry-type: 'private'
+          registry-type: private
           mask-password: true
 
       - name: Build, tag, and push Docker image to Amazon ECR
@@ -38,15 +39,16 @@ jobs:
           IMAGE_TAG: latest
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG 
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-      
 
       - name: Download active task definition from AWS ECS
-       run: |
-        aws ecs describe-task-definition --task-definition nodejs-ecs-deploy-dev-frontend-task-definition --query taskDefinition > task-definition.json
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition nodejs-ecs-deploy-dev-frontend-task-definition \
+            --query taskDefinition \
+            > task-definition.json
 
-      # 5. Insert new image URI into local Task Definition
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: render-task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -54,7 +56,3 @@ jobs:
           task-definition: task-definition.json
           container-name: ${{ vars.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
-
-      
-
-      
