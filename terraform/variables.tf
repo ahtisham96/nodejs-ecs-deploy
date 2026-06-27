@@ -19,6 +19,10 @@ variable "cidr_block" {
   type        = string
 }
 
+variable "public_subnets" {
+  description = "public subnets"
+  type        = string
+}
 
 # --------------------------------------------------
 # ECS-Fargate module variables
