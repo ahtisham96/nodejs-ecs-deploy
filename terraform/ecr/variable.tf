@@ -3,10 +3,10 @@
 # --------------------------------------------------
 variable "project_name" {
   description = "project name"
-  type = string
+  type        = string
 }
 
 variable "stage" {
   description = "environment name"
-  type = string
+  type        = string
 }

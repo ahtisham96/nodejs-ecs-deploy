@@ -2,7 +2,7 @@
 # Common Variables
 # --------------------------------------------------
 project_name = "nodejs-ecs-deploy"
-stage = "dev"
+stage        = "dev"
 
 # --------------------------------------------------
 # VPC module variables

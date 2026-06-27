@@ -1,5 +1,5 @@
 module "ecr_repo" {
-  source = "./ecr"
+  source       = "./ecr"
   project_name = var.project_name
-  stage = var.stage
+  stage        = var.stage
 }

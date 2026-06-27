@@ -3,20 +3,20 @@
 # --------------------------------------------------
 variable "project_name" {
   description = "project name"
-  type = string
+  type        = string
 }
 
 variable "stage" {
   description = "environment name"
-  type = string
+  type        = string
 }
 
 # --------------------------------------------------
 # VPC module variables
 # --------------------------------------------------
 variable "cidr_block" {
-    description = "cidr_blcok"
-    type = string
+  description = "cidr_blcok"
+  type        = string
 }
 
 
